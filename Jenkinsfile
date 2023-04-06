@@ -2,31 +2,32 @@ pipeline{
     agent any
 
     tools {
-        maven 'Maven_3.8.7'       
+        maven 'Maven_3.9'       
     }
 
     stages{
         stage('SCM Checkout'){
             steps{
-                checkout scmGit(branches: [[name: '*/main']], extensions: [], userRemoteConfigs: [[credentialsId: 'Git_Token', url: 'https://github.com/getyourdurga/java-maven-app.git']])
+                checkout scmGit(branches: [[name: '*/main']], extensions: [], userRemoteConfigs: [[credentialsId: 'Git_Token', url: 'https://github.com/sasi0616/java-maven-app.git']])
             }
             
         }
-        stage('maven-build'){
+        stage('mavenbuild'){
             steps{
                 sh 'mvn clean install'
             }
         }
-        stage('sonarqube'){
-            steps{
-                withSonarQubeEnv("SonarQube") {
-                        sh "${tool("Sonar 4.8")}/bin/sonar-scanner \
+        stage('sonarscanner'){
+               steps{
+                    withSonarQubeEnv('SonarQube') {
+                         sh "${tool("SonarQube")}/bin/sonar-scanner \
                         -Dsonar.projectKey=java-maven-app \
                         -Dsonar.java.binaries=target \
-                        -Dsonar.host.url=http://13.233.160.18:9000 \
-                        -Dsonar.login=sqp_56c17308dacebf6e90d4fadb0afc60b35056a9d5"
+                        -Dsonar.host.url=http://52.3.226.23:9000 \
+                        -Dsonar.login=sqp_0391bfb3db9b19f71c46191427c6267a90dab838"
                     }
-            }
+               }
+              
         }
         stage('nexus-upload'){
             steps{
