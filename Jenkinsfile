@@ -23,7 +23,7 @@ pipeline{
                          sh "${tool("SonarQube")}/bin/sonar-scanner \
                         -Dsonar.projectKey=java-maven-app \
                         -Dsonar.java.binaries=target \
-                        -Dsonar.host.url=http://52.3.226.23:9000 \
+                        -Dsonar.host.url=http://3.238.154.167:9000 \
                         -Dsonar.login=sqp_0391bfb3db9b19f71c46191427c6267a90dab838"
                     }
                }
